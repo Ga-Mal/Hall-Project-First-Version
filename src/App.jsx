@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import UpdateHall from "./Components/UpdateHall";
 import UpdateLocation from "./Components/updateLocation";
+
 const AddHall = lazy(() => import("./Components/addHall"));
 const AdminManagement = lazy(() => import("./Components/AdminManagement"));
 const AddLocation = lazy(() => import("./Components/AddLocation"));
