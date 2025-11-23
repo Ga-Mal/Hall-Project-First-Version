@@ -32,7 +32,8 @@ export default function Navbar() {
           title: "تم تسجيل الخروج بنجاح ✅",
           text: "لقد تم تسجيل خروجك بنجاح. نأمل أن نراك مرة أخرى قريبًا!",
           icon: "success",
-          confirmButtonText: "حسناً",
+          timer: 1500,
+          showConfirmButton: false
         }).then(() => {
           navigate("/");
         });
