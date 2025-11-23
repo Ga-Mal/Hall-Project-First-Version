@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 export default function UpdateLocation() {
   const { updatePhotographyID } = useParams();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [headerImg, setHeaderImg] = useState("");
   const [galleryImgs, setGalleryImgs] = useState([]);
   const headerInputRef = useRef();
@@ -73,7 +74,7 @@ export default function UpdateLocation() {
     if (!file) return;
 
     try {
-      const options = { maxSizeMB: 0.3, maxWidthOrHeight: 1920 };
+      const options = { maxSizeMB: 1, maxWidthOrHeight: 5000 };
       const compressedFile = await imageCompression(file, options);
       const reader = new FileReader();
       reader.onloadend = () => setHeaderImg(reader.result);
@@ -89,7 +90,7 @@ export default function UpdateLocation() {
     if (files.length === 0) return;
 
     try {
-      const options = { maxSizeMB: 0.3, maxWidthOrHeight: 1920 };
+      const options = { maxSizeMB: 1, maxWidthOrHeight: 5000 };
       const compressedImgs = await Promise.all(
         files.map(async (file) => {
           const compressedFile = await imageCompression(file, options);
@@ -110,7 +111,7 @@ export default function UpdateLocation() {
   // submit final data
   const submitLocation = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
 
       const locationData = {
@@ -126,12 +127,10 @@ export default function UpdateLocation() {
         gallery_imgs: JSON.stringify(galleryImgs),
       };
 
-      const { error } = await supabase
-        .from("locations")
-        .update(locationData)
-        .eq("id", updatePhotographyID);
+      const { error } = await supabase.from("locations").update(locationData).eq("id", updatePhotographyID);
 
       if (error) {
+        setLoading(false);
         console.log(error);
         Swal.fire({
           title: "حدث خطأ أثناء التعديل",
@@ -139,7 +138,7 @@ export default function UpdateLocation() {
         });
         return;
       }
-
+      setLoading(false);
       Swal.fire({
         title: "تم تحديث بيانات اللوكيشن بنجاح",
         icon: "success",
@@ -165,6 +164,7 @@ export default function UpdateLocation() {
         icon: "error",
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -258,8 +258,17 @@ export default function UpdateLocation() {
 
         <button
           type="submit"
-          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 rounded-2xl cursor-pointer hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500">
-          تعديل البيانات
+          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
+             hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 
+             flex items-center justify-center gap-2 rounded-2xl">
+          {loading ? (
+            <>
+              <span>جاري التعديل...</span>
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            </>
+          ) : (
+            "تعديل البيانات"
+          )}
         </button>
       </div>
     </form>

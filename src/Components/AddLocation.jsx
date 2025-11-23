@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { supabase } from "../utils/supabaseClient";
+import Swal from "sweetalert2";
+import imageCompression from "browser-image-compression";
 
 export default function AddLocation() {
+  const [loading, setLoading] = useState(false);
   const [headerImg, setHeaderImg] = useState("");
   const [galleryImgs, setGalleryImgs] = useState([]);
   const [form, setForm] = useState({
@@ -19,30 +22,53 @@ export default function AddLocation() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleHeaderImg = (e) => {
+  //  Storage optimization with image compression
+  const handleHeaderImg = async (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => setHeaderImg(reader.result);
-    reader.readAsDataURL(file);
+    try {
+      const options = {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 3000,
+        useWebWorker: true,
+      };
+      // Compress the image file
+      const compressedFile = await imageCompression(file, options);
+      // Convert compressed file to base64
+      const reader = new FileReader();
+      reader.onloadend = () => setHeaderImg(reader.result);
+      reader.readAsDataURL(compressedFile);
+    } catch (err) {
+      console.error("Header image compression error:", err);
+    }
   };
 
-  const handleGalleryImgs = (e) => {
+  const handleGalleryImgs = async (e) => {
     const files = Array.from(e.target.files);
-    Promise.all(
-      files.map(
-        (file) =>
-          new Promise((resolve) => {
+    try {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 3000,
+        useWebWorker: true,
+      };
+      // Compress the image files and convert to base64
+      const compressedImgs = await Promise.all(
+        files.map(async (file) => {
+          const compressedFile = await imageCompression(file, options);
+          return new Promise((resolve) => {
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(file);
-          })
-      )
-    ).then((imgs) => setGalleryImgs(imgs));
+            reader.readAsDataURL(compressedFile);
+          });
+        })
+      ).then((imgs) => setGalleryImgs(imgs));
+    } catch (err) {
+      console.error("Gallery images compression error:", err);
+    }
   };
 
   const submitLocation = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const locationData = {
         ...form,
@@ -51,35 +77,50 @@ export default function AddLocation() {
         gallery_imgs: JSON.stringify(galleryImgs),
       };
 
-      console.log("Final Location Data To Send:", locationData);
+      const { error } = await supabase.from("locations").insert([locationData]);
 
-      const { data, error } = await supabase.from("locations").insert([locationData]);
-
-      if (error) {
-        console.error("Error inserting location:", error);
-        alert("حدث خطأ أثناء إضافة اللوكيشن");
+      if (!error) {
+        // reset form
+        setForm({
+          title: "",
+          price: "",
+          address: "",
+          location: "",
+          phone: "",
+          whatsapp: "",
+          description: "",
+        });
+        setHeaderImg("");
+        setGalleryImgs([]);
+        setLoading(false);
         return;
       }
+        console.error("Error inserting location:", error);
+        Swal.fire({
+          title: "حدث خطأ أثناء إضافة اللوكيشن",
+          icon: "error",
+          timer:1500,
+        })
+        console.log(error.message);
+        setLoading(false);
 
-      console.log("تم إضافة اللوكيشن:", data);
-      alert("تم إضافة اللوكيشن بنجاح");
-
-      // reset form
-      setForm({
-        title: "",
-        price: "",
-        address: "",
-        location: "",
-        phone: "",
-        whatsapp: "",
-        description: "",
-      });
-      setHeaderImg("");
-      setGalleryImgs([]);
     } catch (err) {
       console.error("Submit Error:", err);
-      alert("حدث خطأ أثناء الإرسال: " + (err.message || JSON.stringify(err)));
+      console.log(err.message || JSON.stringify(err));
+      Swal.fire({
+        title: "حدث خطأ أثناء إضافة اللوكيشن",
+        icon: "error",
+        timer:1500
+      })
+      setLoading(false);
     }
+    setLoading(false);
+        Swal.fire({
+        title: "تم اضافة اللوكيشن بنجاح",
+        icon: "success",
+        timer: 1500,
+      })
+
   };
 
   return (
@@ -101,8 +142,19 @@ export default function AddLocation() {
         <label className="font-semibold">مجموعة الصور:</label>
         <input type="file" accept="image/*" multiple onChange={handleGalleryImgs} className="input" required/>
 
-        <button type="submit" className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 rounded-2xl cursor-pointer hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500">
-          إرسال البيانات
+        <button
+          type="submit"
+          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
+             hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 
+             flex items-center justify-center gap-2 rounded-2xl">
+          {loading ? (
+            <>
+              <span>جاري الإرسال...</span>
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            </>
+          ) : (
+            "إرسال البيانات"
+          )}
         </button>
       </div>
     </form>

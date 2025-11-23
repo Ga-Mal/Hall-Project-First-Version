@@ -23,7 +23,7 @@ export default function Locations() {
       const { data, error } = await supabase
         .from("locations")
         .select(
-          "id, title, price, category, address, location, phone, whatsapp, description, header_img"
+          "id, title, price, description, header_img"
         );
 
       if (error) {

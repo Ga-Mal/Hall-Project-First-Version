@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import imageCompression from "browser-image-compression";
+import Swal from "sweetalert2";
 
 export default function AddHall() {
+  const headerInputRef = useRef();
+  const galleryInputRef = useRef();
+  const [loading, setLoading] = useState(false);
   const [headerImg, setHeaderImg] = useState("");
   const [galleryImgs, setGalleryImgs] = useState([]);
   const [form, setForm] = useState({
@@ -14,7 +18,7 @@ export default function AddHall() {
     phone: "",
     whatsapp: "",
     description: "",
-    extensions: [{ name: "", peaces: 0, price: 0 }],
+    extensions: [{ name: "", peaces: "", price: "" }],
   });
 
   // handle text inputs
@@ -37,10 +41,10 @@ export default function AddHall() {
     const file = e.target.files[0];
     try {
       const options = {
-        maxSizeMB: 0.3,
-        maxWidthOrHeight: 1920,
+        maxSizeMB: 1,
+        maxWidthOrHeight: 5000,
         useWebWorker: true,
-      }; 
+      };
       // Compress the image file
       const compressedFile = await imageCompression(file, options);
       const reader = new FileReader();
@@ -71,7 +75,12 @@ export default function AddHall() {
   const handleGalleryImgs = async (e) => {
     const files = Array.from(e.target.files);
     try {
-      const options = {maxSizeMB: 0.3,maxWidthOrHeight: 1920,useWebWorker: true};
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 5000,
+        useWebWorker: true,
+      };
+      // Compress the image files and convert to base64
       const compressedImgs = await Promise.all(
         files.map(async (file) => {
           const compressedFile = await imageCompression(file, options);
@@ -81,8 +90,7 @@ export default function AddHall() {
             reader.readAsDataURL(compressedFile);
           });
         })
-      );
-      setGalleryImgs(compressedImgs);
+      ).then((imgs) => setGalleryImgs(imgs));
     } catch (err) {
       console.error("Gallery images compression error:", err);
     }
@@ -108,10 +116,12 @@ export default function AddHall() {
   // submit final data
   const submitHall = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       // clean extensions
-      const cleanedExtensions = form.extensions.filter((ext) => ext.name && ext.name.trim() !== "").map((ext) => ({
+      const cleanedExtensions = form.extensions
+        .filter((ext) => ext.name && ext.name.trim() !== "")
+        .map((ext) => ({
           name: ext.name.trim(),
           peaces: Number(ext.peaces) || 0,
           price: Number(ext.price) || 0,
@@ -139,29 +149,52 @@ export default function AddHall() {
       const { error } = await supabase.from("halls").insert([hallData]);
 
       if (!error) {
+        // إعادة ضبط الفورم
         setForm({
           title: "",
-          price: 0,
+          price: "",
+          category: "halls",
           address: "",
           hall_location: "",
           phone: "",
           whatsapp: "",
           description: "",
-          extensions: [{ name: "", peaces: 0, price: 0 }],
+          extensions: [{ name: "", peaces: "", price: "" }],
         });
+
+        // إعادة ضبط الصور
         setHeaderImg("");
         setGalleryImgs([]);
-        alert("تم إضافة القاعة بنجاح");
+
+        // إعادة ضبط Inputs من DOM
+        if (headerInputRef.current) headerInputRef.current.value = "";
+        if (galleryInputRef.current) galleryInputRef.current.value = "";
+
+        Swal.fire({
+          icon: "success",
+          title: "تم اضافة القاعة بنجاح",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        setLoading(false);
       } else {
+
         console.log(error);
+        setLoading(false);
+        Swal.fire({
+          icon: "error",
+          title: "حدث خطأ اثناء اضافة القاعة",
+          showConfirmButton: true,
+          timer: 1500,
+        });   
       }
     } catch (err) {
+      setLoading(false);
       console.error("Error submitting hall:", err);
-      alert(
-        " حدث خطأ اثناء اضافة القاعة: ",
-        err.message || JSON.stringify(err)
-      );
+      console.log(err.message || JSON.stringify(err));
     }
+    setLoading(false);
   };
 
   return (
@@ -231,6 +264,7 @@ export default function AddHall() {
         {/* Header image */}
         <label className="font-semibold">صورة الهيدر:</label>
         <input
+          ref={headerInputRef}
           type="file"
           accept="image/*"
           onChange={handleHeaderImg}
@@ -241,6 +275,7 @@ export default function AddHall() {
         {/* Gallery images */}
         <label className="font-semibold">مجموعة الصور:</label>
         <input
+          ref={galleryInputRef}
           type="file"
           accept="image/*"
           multiple
@@ -256,18 +291,21 @@ export default function AddHall() {
             <div key={i} className="grid grid-cols-3 gap-2 mb-2">
               <input
                 name="name"
+                value={form.extensions[i].name}
                 placeholder="Name"
                 className="input"
                 onChange={(e) => handleExtensionChange(i, e)}
               />
               <input
                 name="peaces"
+                value={form.extensions[i].peaces}
                 placeholder="Peaces"
                 className="input"
                 onChange={(e) => handleExtensionChange(i, e)}
               />
               <input
                 name="price"
+                value={form.extensions[i].price}
                 placeholder="Price"
                 className="input"
                 onChange={(e) => handleExtensionChange(i, e)}
@@ -285,8 +323,17 @@ export default function AddHall() {
 
         <button
           type="submit"
-          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 rounded-2xl cursor-pointer hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500">
-          إرسال البيانات
+          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
+             hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 
+             flex items-center justify-center gap-2 rounded-2xl">
+          {loading ? (
+            <>
+              <span>جاري الإرسال...</span>
+              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            </>
+          ) : (
+            "إرسال البيانات"
+          )}
         </button>
       </div>
     </form>

@@ -8,8 +8,8 @@ export default function ReservationForm() {
   const location = useLocation();
   const isHall = location.pathname.includes("halls");
   const isPhotography = location.pathname.includes("photography");
-  const currentService = isHall ? "halls" : isPhotography ? "locations" : null;
   const serviceID = hallID || photographyID;
+  const currentService = isHall ? "halls" : isPhotography ? "locations" : null;
   const [formData, setFormData] = useState({
     subject: " طلب خدمة من PartyVenue",
     clientName: "",
@@ -73,7 +73,7 @@ export default function ReservationForm() {
           title: "طلبك وصلنا 😃",
           text: `أهلا ${formData.clientName}، شكراً لتواصلك معنا! سنقوم بالرد عليك في أقرب وقت ممكن.`,
           icon: "success",
-          confirmButtonText: "اشطا",
+          confirmButtonText: "تمام",
         });
       }
     } catch (error) {
