@@ -3,9 +3,10 @@ import { lazy, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import UpdateHall from "./Components/UpdateHall";
-import UpdateLocation from "./Components/updateLocation";
+
 import { useHallsStore } from "./zustand/hallsStore";
 import { useLocatoinsStore } from "./zustand/locationsStore";
+import UpdateLocation from "./Components/UpdateLocation";
 
 const AddHall = lazy(() => import("./Components/addHall"));
 const AdminManagement = lazy(() => import("./Components/AdminManagement"));
