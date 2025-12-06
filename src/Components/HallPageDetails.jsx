@@ -1,51 +1,33 @@
 import { Link, useParams } from "react-router";
 import BackgroundImg from "./BackgroundImg";
-import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabaseClient";
+import { useHallsStore } from "../zustand/hallsStore";
 
 export default function HallPageDetails() {
   const { hallID } = useParams();
-  const [hall, setHall] = useState(null);
 
-  const fetchHall = async () => {
-    try {
-      const { data, error } = await supabase.from("halls").select("*").eq("id", hallID).single();
-      
-      if (error) {
-        console.error("Error fetching:", error);
-        return;
-      }
+  const {getHallById , loading} = useHallsStore();
+  const hall = getHallById(parseInt(hallID));
 
-      // async parsing JSON fields
-      try{
-        // if data data parsing successfuly > setHall
-        const cleanedData = {
-          ...data,
-          imgs: data.imgs ? JSON.parse(data.imgs) : [],
-          header_img: data.header_img ? JSON.parse(data.header_img) : "",
-          extensions: data.extensions ? JSON.parse(data.extensions) : [],
-        };
-        setHall(cleanedData);
-
-        // if not successfuly parsing > setHall with original data and log error
-      }catch(error){
-        setHall(data);
-        console.log("Cannot parse JSON fields: ", error);
-      }
-      
-    } catch (err) {
-      console.error("Fetch Error:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchHall();
-  }, []);
-
-  if (!hall) {
-  return <p className="text-center my-20 py-10">جاري التحميل...</p>;
-}
+  // if (!hall) {
+  //   return <p className="text-center my-20 py-10">جاري التحميل...</p>;
+  // }
   
+    if (!hall) {
+      return (
+        <>
+          {loading ? (
+            <div className="flex items-center justify-center gap-2">
+              <span className="loader w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                جاري جلب اللوكيشن...
+              </div>
+            ) : (
+              "الدخول"
+            )
+          }
+        </>
+      )
+    }
+
   return (
     <div className="">
       <BackgroundImg img={hall.header_img} details="" />

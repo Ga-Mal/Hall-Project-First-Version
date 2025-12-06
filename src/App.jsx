@@ -4,6 +4,8 @@ import { Toaster } from "react-hot-toast";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router";
 import UpdateHall from "./Components/UpdateHall";
 import UpdateLocation from "./Components/updateLocation";
+import { useHallsStore } from "./zustand/hallsStore";
+import { useLocatoinsStore } from "./zustand/locationsStore";
 
 const AddHall = lazy(() => import("./Components/addHall"));
 const AdminManagement = lazy(() => import("./Components/AdminManagement"));
@@ -25,12 +27,18 @@ const PhotographyPageDetails = lazy(() =>
 const Navbar = lazy(() => import("./Components/Navbar"));
 const Footer = lazy(() => import("./Components/Footer"));
 const ReservationForm = lazy(() => import("./Components/ReservationForm"));
-const AuthLayout = lazy(() => import("./Layout/AuthLayout"));
 const RegisterForm = lazy(() => import("./Pages/Register"));
 const LoginForm = lazy(() => import("./Pages/Login"));
 
 function MainLayout() {
   const [showButton, setShowButton] = useState(false);
+  const fetchHalls = useHallsStore((state) => state.fetchHalls);
+  const fetchLocations = useLocatoinsStore((state) => state.fetchLocations);
+
+  useEffect(() => {
+    fetchHalls();
+    fetchLocations();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setShowButton(window.scrollY > 200);

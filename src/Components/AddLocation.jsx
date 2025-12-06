@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { supabase } from "../utils/supabaseClient";
 import Swal from "sweetalert2";
 import imageCompression from "browser-image-compression";
+import { useLocatoinsStore } from "../zustand/locationsStore";
 
 export default function AddLocation() {
   const [loading, setLoading] = useState(false);
   const [headerImg, setHeaderImg] = useState("");
   const [galleryImgs, setGalleryImgs] = useState([]);
+  const {addLocation} = useLocatoinsStore();
   const [form, setForm] = useState({
     title: "",
     price: "",
     category: "locations",
     address: "",
-    location: "",
+    // location: "",
     phone: "",
     whatsapp: "",
     description: "",
@@ -22,21 +23,15 @@ export default function AddLocation() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  //  Storage optimization with image compression
+    const compress = async (file) => {
+      return await imageCompression(file, { maxSizeMB: 1.3, maxWidthOrHeight: 5000, useWebWorker: true });
+    };
+
   const handleHeaderImg = async (e) => {
     const file = e.target.files[0];
     try {
-      const options = {
-        maxSizeMB: 0.5,
-        maxWidthOrHeight: 3000,
-        useWebWorker: true,
-      };
-      // Compress the image file
-      const compressedFile = await imageCompression(file, options);
-      // Convert compressed file to base64
-      const reader = new FileReader();
-      reader.onloadend = () => setHeaderImg(reader.result);
-      reader.readAsDataURL(compressedFile);
+      const compressed = await compress(file);
+      setHeaderImg(compressed);
     } catch (err) {
       console.error("Header image compression error:", err);
     }
@@ -45,22 +40,8 @@ export default function AddLocation() {
   const handleGalleryImgs = async (e) => {
     const files = Array.from(e.target.files);
     try {
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 3000,
-        useWebWorker: true,
-      };
-      // Compress the image files and convert to base64
-      const compressedImgs = await Promise.all(
-        files.map(async (file) => {
-          const compressedFile = await imageCompression(file, options);
-          return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(compressedFile);
-          });
-        })
-      ).then((imgs) => setGalleryImgs(imgs));
+      const compressed = await Promise.all(files.map((file) => compress(file)));
+      setGalleryImgs(compressed);
     } catch (err) {
       console.error("Gallery images compression error:", err);
     }
@@ -70,14 +51,9 @@ export default function AddLocation() {
     e.preventDefault();
     setLoading(true);
     try {
-      const locationData = {
-        ...form,
-        price: Number(form.price) || 0,
-        header_img: JSON.stringify(headerImg),
-        gallery_imgs: JSON.stringify(galleryImgs),
-      };
+      const locationData = { ...form, price: Number(form.price) || 0, header_img: JSON.stringify(headerImg), gallery_imgs: JSON.stringify(galleryImgs) };
 
-      const { error } = await supabase.from("locations").insert([locationData]);
+      const { error } = await addLocation(locationData, headerImg, galleryImgs);
 
       if (!error) {
         // reset form
@@ -85,7 +61,7 @@ export default function AddLocation() {
           title: "",
           price: "",
           address: "",
-          location: "",
+          // location: "",
           phone: "",
           whatsapp: "",
           description: "",
@@ -131,7 +107,7 @@ export default function AddLocation() {
         <input value={form.title} name="title" placeholder="اسم المكان" className="input" onChange={handleChange} required/>
         <input value={form.price} name="price" placeholder="السعر" className="input" onChange={handleChange} required/>
         <input value={form.address} name="address" placeholder="العنوان" className="input" onChange={handleChange} required/>
-        <input value={form.location} name="location" placeholder="Location" className="input" onChange={handleChange} required/>
+        {/* <input value={form.location} name="location" placeholder="Location" className="input" onChange={handleChange} required/> */}
         <input value={form.phone} name="phone" placeholder="رقم الهاتف" className="input" onChange={handleChange} required/>
         <input value={form.whatsapp} name="whatsapp" placeholder="WhatsApp" className="input" onChange={handleChange} required/>
         <textarea value={form.description} name="description" placeholder="الوصف" className="input" onChange={handleChange} required></textarea>
@@ -143,6 +119,7 @@ export default function AddLocation() {
         <input type="file" accept="image/*" multiple onChange={handleGalleryImgs} className="input" required/>
 
         <button
+          disabled={loading}
           type="submit"
           className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
              hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 

@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/imgs/icons-logos/logo icon.png";
 import { supabase } from "../utils/supabaseClient";
 import Swal from "sweetalert2";
-// import face from "../assets/imgs/icons-logos/facebook.svg";
-// import google from "../assets/imgs/icons-logos/google.svg";
+import face from "../assets/imgs/icons-logos/facebook.svg";
+import google from "../assets/imgs/icons-logos/google.svg";
 
 export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
@@ -151,7 +151,7 @@ export default function RegisterForm() {
       <div className="w-full max-w-[80%] mx-auto flex md:flex-row flex-col-reverse items-center gap-y-10 my-10 justify-between md:items-start">
         {/* Right Title */}
         <div className="">
-          <Link to="/home" className="text-(--color-text-gold) font-bold text-lg hover:(--color-text-gold) cursor-pointer transition">
+          <Link to="/" className="text-(--color-text-gold) font-bold text-lg hover:(--color-text-gold) cursor-pointer transition">
              الصفحة الرئيسية
           </Link>
         <span className="font-bold mx-2"> | </span>
@@ -169,7 +169,7 @@ export default function RegisterForm() {
       </div>
 
       {/* FORM CARD */}
-      <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl w-full mx-auto max-w-md p-6 mt-5">
+      <div className="bg-white/10 backdrop-blur-lg border mb-10 border-white/20 shadow-xl rounded-2xl w-full mx-auto max-w-md p-6 mt-5">
         <h2 className="text-center text-xl font-bold mb-2"> مرحبًا بك 👋</h2>
         <p className="text-center text-sm text-gray-200 mb-6">
           سجّل الآن واستمتع باختيار قاعتك.
@@ -222,23 +222,23 @@ export default function RegisterForm() {
         </form>
 
         {/* Divider */}
-        {/* <div className="my-5 flex items-center gap-3">
+        <div className="my-5 flex items-center gap-3">
           <div className="flex-1 h-px bg-white/30"></div>
           <span className="text-sm">أو</span>
           <div className="flex-1 h-px bg-white/30"></div>
-        </div> */}
+        </div>
 
         {/* Login with Google */}
-        {/* <button className="w-full cursor-pointer bg-white text-black p-3 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-200 transition">
+        <button className="w-full cursor-pointer bg-white text-black p-3 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-200 transition">
           <img src={google} className="w-5" />
           تسجيل الدخول عبر جوجل
-        </button> */}
+        </button>
 
         {/* Facebook */}
-        {/* <button className="mt-3 w-full cursor-pointer bg-white text-black p-3 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-200 transition">
+        <button className="mt-3 w-full cursor-pointer bg-white text-black p-3 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-200 transition">
           <img src={face} className="w-5"/>
           تسجيل الدخول عبر الفيسبوك
-        </button> */}
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import imageFunny from "../assets/imgs/funny.jpg";
 import { getUserSession } from "../utils/getUserSession";
+
 export default function NotFoundOrErrorPage() {
   const currentUser = getUserSession();
   const firstName =

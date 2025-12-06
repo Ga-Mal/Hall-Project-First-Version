@@ -56,11 +56,26 @@ export default function ReservationForm() {
     form.append("message", formData.details);
 
     try {
+      // Send data to Web3Forms
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: form,
       });
-      if (response.ok) {
+      // Save order to Supabase
+      const {error} = await supabase.from("orders").insert([
+        {
+          hall_id: isHall ? formData.serviceID : null,
+          location_id: isPhotography ? formData.serviceID : null,
+          client_name: formData.clientName,
+          service_name: formData.serviceName,
+          client_phone: formData.phone,
+          client_whatsapp: formData.whatsapp,
+          details: formData.details,
+          service_id: formData.serviceID,
+        },
+      ]);
+
+      if (response.ok && !error) {
         setFormData({
           clientName: "",
           phone: "",

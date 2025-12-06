@@ -1,68 +1,10 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../utils/supabaseClient";
 import BackgroundImg from "../Components/BackgroundImg";
 import CardStandard from "../Components/CardStandard";
 import imgHeader from "../assets/imgs/halls.png";
+import { useLocatoinsStore } from "../zustand/locationsStore";
 
 export default function Locations() {
-  const [locations, setLocations] = useState([]);
-
-  // تحميل الصور بطريقة آمنة
-  const loadImage = (url) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = url;
-      img.onload = () => resolve(url);
-      img.onerror = () => resolve("");
-    });
-  };
-
-  // fetch locations بدون الصور (أسرع)
-  const fetchLocations = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("locations")
-        .select(
-          "id, title, price, description, header_img"
-        );
-
-      if (error) {
-        console.error("Error fetching locations:", error);
-        return;
-      }
-
-      // تحويل JSON string للصورة
-      const cleaned = data.map((item) => ({
-        ...item,
-        header_img: item.header_img ? JSON.parse(item.header_img) : "",
-      }));
-
-      // حفظ البيانات السريعة بدون الصورة
-      localStorage.setItem("locationsData", JSON.stringify(cleaned));
-
-      // تحميل الصور بعدين في الخلفية
-      const withImages = await Promise.all(
-        cleaned.map(async (loc) => ({
-          ...loc,
-          header_img: await loadImage(loc.header_img),
-        }))
-      );
-
-      setLocations(withImages);
-    } catch (err) {
-      console.error("Locations Fetch Error:", err);
-    }
-  };
-
-  // استرجاع + تحديث
-  useEffect(() => {
-    const stored = localStorage.getItem("locationsData");
-    if (stored) {
-      setLocations(JSON.parse(stored)); // عرض سريع
-    }
-
-    fetchLocations(); // تحديث + تحميل الصور
-  }, []);
+  const {locations} = useLocatoinsStore();
 
   return (
     <div className="">

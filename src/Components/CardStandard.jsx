@@ -1,20 +1,57 @@
 import { Card } from "flowbite-react";
 import { Link } from "react-router";
 import { getUserSession } from "../utils/getUserSession";
-import { DeleteItem } from "./DeleteItem";
+import { useHallsStore } from "../zustand/hallsStore";
+import { useLocatoinsStore } from "../zustand/locationsStore";
+import Swal from "sweetalert2";
 
 export default function CardStandard({ btnMassege, details }) {
   const user = getUserSession();
-  const currentPath = window.location.pathname.includes("halls")
-    ? "halls"
-    : "photography";
+  let descriptionLength = details.description.length > 100 ? details.description.slice(0, 100) : details.description;
+  const currentPath = window.location.pathname.includes("halls") ? "halls" : "photography";
+  const { deleteHall, fetchHalls, error } = useHallsStore();
+  const {deleteLocation , fetchLocations , errors} = useLocatoinsStore();
 
-  let descriptionLength =
-    details.description.length > 100
-      ? details.description.slice(0, 100)
-      : details.description;
+  const deleteitem = async () => {
+    if (currentPath === "halls") {
+      const confirmResult = await Swal.fire({
+        title: "هل أنت متأكد من الحذف؟",
+        text: "لن تتمكن من التراجع عن هذا الإجراء!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "نعم",
+        cancelButtonText: "لا",
+      });
+
+      if (!confirmResult.isConfirmed) return;
+
+      deleteHall(Number(details.id));
+
+      if (!error) {
+        fetchHalls();
+        return;
+      }
+    }
+    if(currentPath === "photography"){
+        const confirmResult = await Swal.fire({
+        title: "هل أنت متأكد من الحذف؟",
+        text: "لن تتمكن من التراجع عن هذا الإجراء!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "نعم",
+        cancelButtonText: "لا",
+      });
+      if(!confirmResult.isConfirmed) return;
+      deleteLocation(Number(details.id));
+      if(!errors){
+        fetchLocations();
+        return;
+      }
+    }
+  };
+  
   return (
-    <div className="w-full my-5 hover:cursor-pointer">
+    <div className="w-full my-5">
       <Card className="max-w-sm  text-(--color-text-black) bg-transparent! hover:shadow-[#641888e3] shadow-lg duration-200">
         <div className=" h-full">
           <img
@@ -39,7 +76,7 @@ export default function CardStandard({ btnMassege, details }) {
             </Link>
             {user?.role === "admin" && (
               <button
-                onClick={() => DeleteItem(currentPath, details.id)}
+                onClick={() => deleteitem()}
                 className="bg-red-700 m-3 px-2 py-1.5 hover:cursor-pointer rounded-2xl hover:bg-[#790000] text-amber-50 duration-500 ">
                 حذف
               </button>

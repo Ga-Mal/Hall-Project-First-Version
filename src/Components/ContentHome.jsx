@@ -1,7 +1,6 @@
 import BackgroundImg from "./BackgroundImg";
 import imgComp from "../assets/imgs/halls.png";
 import loc from "../assets/imgs/loaction.png";
-// import off2 from "../assets/imgs/venue-offer.png";
 import Button from "./Button";
 import ContactForm from "./ContactForm";
 
