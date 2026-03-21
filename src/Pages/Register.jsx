@@ -194,13 +194,6 @@ export default function RegisterForm() {
           />
 
           <div className="flex gap-2">
-            {/* <select name="country" value={formData.country} onChange={handleChange}
-              className=" p-3 rounded-lg bg-white/20 text-white focus:outline-none">
-              <option value="+20" className="text-black"> +20 </option>
-              <option value="+966" className="text-black"> +966 </option>
-              <option value="+971" className="text-black"> +971 </option>
-            </select> */}
-
             <input type="text" name="phone" placeholder="رقم الهاتف" value={formData.phone} onChange={handleChange}
               className="flex-1 p-3 rounded-lg bg-white/20 placeholder-white text-white focus:outline-none"
             />

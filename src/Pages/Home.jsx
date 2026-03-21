@@ -11,8 +11,3 @@ export default function Home() {
     </div>
   );
 }
-
-// Ruesible Component 
-
-// ظبط موضوع الصورة اللي في الكومبوننت
-// حل مشكلة الاسكرول اللي ظهر في الكومبوننت ده

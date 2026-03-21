@@ -29,15 +29,6 @@ export default function ContentHome() {
             <BackgroundImg img={loc} />
           </div>
         </div>
-        {/* <div className="halls w-full m-auto">
-          <div className="details flex justify-between items-center py-10 font-bold">
-            <h2 className="text-2xl text-(--color-text-black)"> العروض</h2>
-            <Button text={"عرض الكل"} url={"/offers"} />
-          </div>
-          <div className="w-full">
-            <BackgroundImg img={off2} />
-          </div>
-        </div> */}
 
         {/* About */}
         <p className="text-3xl my-5 font-bold md:my-15 text-center">من نحن</p>

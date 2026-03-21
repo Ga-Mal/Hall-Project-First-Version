@@ -6,7 +6,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 import { getUserSession } from "../utils/getUserSession";
 import Swal from "sweetalert2";
 
-export default function Navbar() {
+export default function Nav() {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -47,12 +47,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center md:mx-20">
           <Link to={"/"}>
-            <img
-              loading="lazy"
-              src={logo}
-              alt="logoImg"
-              className="w-40 md:w-48"
-            />
+            <img loading="lazy" src={logo} alt="logoImg" className="w-40 md:w-48" />
           </Link>
         </div>
 
@@ -65,20 +60,9 @@ export default function Navbar() {
               { name: "القاعات", path: "/halls" },
               { name: "لوكيشن تصوير", path: "/photography" },
               { name: "إدارة", path: "management", adminOnly: true },
-            ]
-              .filter(
-                (link) => !link.adminOnly || currentUser?.role === "admin"
-              )
-              .map((link, index) => (
+            ].filter( (link) => !link.adminOnly || currentUser?.role === "admin").map((link, index) => (
                 <li key={index}>
-                  <Link
-                    to={link.path}
-                    className={`
-                    ${
-                      isActive(link.path)
-                        ? "text-(--color-text-gold)"
-                        : "text-(--color-text-light)"
-                    }
+                  <Link to={link.path} className={`${ isActive(link.path) ? "text-(--color-text-gold)" : "text-(--color-text-light)"}
                     relative transition 
                     after:content-[''] after:absolute after:-bottom-1 after:left-0 
                     after:w-0 after:h-0.5 after:bg-(--color-text-gold) 
@@ -94,8 +78,7 @@ export default function Navbar() {
             {currentUser ? (
               <span className="text-(--color-text-light)">
                 أهلا , {firstName} 💜
-                <button
-                  className=" bg-(--color-hover) cursor-pointer px-5 py-1 rounded-2xl hover:bg-[#38084e] hover:text-(--color-text-light) duration-500 mx-5"
+                <button className=" bg-(--color-hover) cursor-pointer px-5 py-1 rounded-2xl hover:bg-[#38084e] hover:text-(--color-text-light) duration-500 mx-5"
                   onClick={clearSession}>
                   خروج
                 </button>
@@ -108,45 +91,23 @@ export default function Navbar() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          {open ? (
-            <HiX
-              className="text-3xl cursor-pointer"
-              onClick={() => setOpen(false)}
-            />
-          ) : (
-            <HiMenu
-              className="text-3xl cursor-pointer"
-              onClick={() => setOpen(true)}
-            />
-          )}
+          {open ? ( <HiX className="text-3xl cursor-pointer" onClick={() => setOpen(false)} /> ) : (
+            <HiMenu className="text-3xl cursor-pointer" onClick={() => setOpen(true)} /> )}
         </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
-      <div
-        className={`
-          md:hidden bg-white/40 backdrop-blur-xl shadow-xl 
-          transition-all duration-300 overflow-hidden
-          ${open ? "max-h-96 py-4" : "max-h-0 py-0"}
-        `}>
+      <div className={`md:hidden bg-white/40 backdrop-blur-xl shadow-xl transition-all duration-300 overflow-hidden
+          ${open ? "max-h-96 py-4" : "max-h-0 py-0"}`}>
         <ul className="flex flex-col items-center gap-6 text-xl font-semibold">
           {[
             { name: "الصفحة الرئيسية", path: "/" },
             { name: "القاعات", path: "/halls" },
             { name: "لوكيشن تصوير", path: "/photography" },
             { name: "إدارة", path: "management", adminOnly: true },
-          ]
-            .filter((link) => !link.adminOnly || currentUser?.role === "admin")
-            .map((link, index) => (
+          ].filter((link) => !link.adminOnly || currentUser?.role === "admin").map((link, index) => (
               <li key={index}>
-                <Link
-                  to={link.path}
-                  className={`
-                    ${
-                      isActive(link.path)
-                        ? "text-(--color-text-gold)"
-                        : "text-(--color-text-light)"
-                    }
+                <Link to={link.path} className={`${isActive(link.path) ? "text-(--color-text-gold)" : "text-(--color-text-light)"}
                     relative transition 
                     after:content-[''] after:absolute after:-bottom-1 after:left-0 
                     after:w-0 after:h-0.5 after:bg-(--color-text-gold) 
@@ -166,8 +127,7 @@ export default function Navbar() {
             <span className="text-(--color-text-light)">
               أهلا , {firstName} 💜
               <br />
-              <button
-                className="mt-5 bg-(--color-text-gold) cursor-pointer px-10 py-1 rounded-2xl hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 mx-auto"
+              <button className="mt-5 bg-(--color-text-gold) cursor-pointer px-10 py-1 rounded-2xl hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 mx-auto"
                 onClick={clearSession}>
                 خروج
               </button>

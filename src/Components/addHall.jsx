@@ -44,14 +44,6 @@ export default function AddHall() {
   setHeaderFile(finalFile);
 };
 
-  // const handleHeaderImg = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file) return;
-
-  //   const compressed = await compress(file);
-  //   setHeaderFile(compressed);
-  // };
-
   const handleGalleryImgs = async (e) => {
   const files = Array.from(e.target.files);
 
@@ -64,12 +56,6 @@ export default function AddHall() {
 
   setGalleryFiles(processed);
 };
-
-  // const handleGalleryImgs = async (e) => {
-  //   const files = Array.from(e.target.files);
-  //   const compressed = await Promise.all(files.map((file) => compress(file)));
-  //   setGalleryFiles(compressed);
-  // };
 
   const addExtension = () => {
     setForm({

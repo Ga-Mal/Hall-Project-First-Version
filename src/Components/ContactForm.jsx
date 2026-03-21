@@ -40,10 +40,7 @@ export default function ContactForm() {
     form.append("message", formData.details);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: form });
 
       if (response.ok) {
         setFormData({

@@ -4,10 +4,6 @@ import logo from "../assets/imgs/icons-logos/logo icon.png";
 import { supabase } from "../utils/supabaseClient";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-// import face from "../assets/imgs/icons-logos/facebook.svg";
-// import google from "../assets/imgs/icons-logos/google.svg";
-
-// password => 6450  /  service => 19765
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -68,7 +64,6 @@ export default function LoginForm() {
   };
 
   return (
-    // 01064014580
     <div className="min-h-screen min-w-full mx-auto bg-(--color-hover) px-4 py-2 text-white">
       {/* CONTENT */}
       <div className="w-full max-w-[80%] mx-auto flex md:flex-row flex-col-reverse items-center gap-y-10 my-10 justify-between md:items-start">

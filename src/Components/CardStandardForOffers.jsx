@@ -1,5 +1,4 @@
 import { Card } from "flowbite-react";
-// import { Link } from "react-router";
 
 export default function CardStandardForOffers({ btnMassege, details }) {
   let descriptionLength = details.description.length > 100 ? details.description.slice(0, 100) : details.description;
