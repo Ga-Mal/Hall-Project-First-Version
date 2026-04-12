@@ -66,12 +66,12 @@ export default function UpdateLocation() {
       };
 
       await updateLocation(location.id, payload , headerImg, galleryImgs);
-      toast.success("تم تعديل اللوكيشن بنجاح ✅", { duration: 3000 });
+      toast.success("تم تعديل المصور بنجاح ✅", { duration: 3000 });
       navigate(-1);
 
     } catch (err) {
       console.log(err);
-      toast.error("حدث خطأ أثناء تعديل اللوكيشن ❌", { duration: 3000 });
+      toast.error("حدث خطأ أثناء تعديل المصور ❌", { duration: 3000 });
     }
   };
   
@@ -85,7 +85,7 @@ export default function UpdateLocation() {
         <input
           value={form.title}
           name="title"
-          placeholder="اسم اللوكيشن"
+          placeholder="اسم المصور"
           className="input"
           onChange={handleChange}
           required
@@ -103,7 +103,7 @@ export default function UpdateLocation() {
         <input
           value={form.address}
           name="address"
-          placeholder="العنوان"
+          placeholder="النطاق"
           className="input"
           onChange={handleChange}
           required

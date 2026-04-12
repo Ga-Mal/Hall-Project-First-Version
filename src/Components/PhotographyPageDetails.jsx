@@ -31,14 +31,14 @@ export default function PhotographyPageDetails() {
                 <p className="text-2xl md:w-[50%] w-[90%] mx-auto text-center text-(--color-text-black)"> {photography.description} </p>
                 <div className="m-10 md:flex flex-wrap justify-center gap-5">
                     {photography.gallery_imgs && photography.gallery_imgs.map((image,i) => (
-                        <img loading="lazy" src={image} key={i} alt="img" className="md:w-[49%] mb-5" />
+                        <img loading="lazy" src={image} key={i} alt="img" className="md:w-[48%] mb-5" />
                     ))}
                 </div>
                 <div className="">
                     <div className="">
                         <p className="text-3xl my-10 font-bold text-(--color-text-black)">السعر {photography.price} جنية مصري</p>
                         <p className="text-3xl mb-10 font-semibold text-(--color-text-black)">معلومات التواصل</p>
-                        <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">العنوان</span> {photography.address}</p>
+                        <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">النطاق</span> {photography.address}</p>
                         {/* <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الموقع</span> {photography.location}</p> */}
                         <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الهاتف</span> <span dir="ltr">{photography.phone}</span></p>
                         <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الواتساب</span> <span dir="ltr">{photography.whatsapp}</span></p>

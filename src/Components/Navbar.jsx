@@ -20,7 +20,7 @@ export default function Nav() {
   const clearSession = () => {
     Swal.fire({
       title: "تسجيل الخروج",
-      text: `اذيك يا ${firstName}, أنت فعلا عايز تخرج؟😢`,
+      text: `أهلا يا ${firstName}, هل تريج الخروج بالفعل ؟😢`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "نعم",
@@ -29,7 +29,7 @@ export default function Nav() {
       if (result.isConfirmed) {
         localStorage.removeItem("session_token");
         Swal.fire({
-          title: "تم تسجيل الخروج بنجاح ✅",
+          title: "تم تسجيل الخروج ✅",
           text: "لقد تم تسجيل خروجك بنجاح. نأمل أن نراك مرة أخرى قريبًا!",
           icon: "success",
           timer: 1500,
@@ -58,7 +58,7 @@ export default function Nav() {
             {[
               { name: "الصفحة الرئيسية", path: "/" },
               { name: "القاعات", path: "/halls" },
-              { name: "لوكيشن تصوير", path: "/photography" },
+              { name: "المصورين", path: "/photography" },
               { name: "إدارة", path: "management", adminOnly: true },
             ].filter( (link) => !link.adminOnly || currentUser?.role === "admin").map((link, index) => (
                 <li key={index}>
@@ -103,7 +103,7 @@ export default function Nav() {
           {[
             { name: "الصفحة الرئيسية", path: "/" },
             { name: "القاعات", path: "/halls" },
-            { name: "لوكيشن تصوير", path: "/photography" },
+            { name: "المصورين", path: "/photography" },
             { name: "إدارة", path: "management", adminOnly: true },
           ].filter((link) => !link.adminOnly || currentUser?.role === "admin").map((link, index) => (
               <li key={index}>

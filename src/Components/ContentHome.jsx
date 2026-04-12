@@ -11,7 +11,7 @@ export default function ContentHome() {
         <div className="halls w-full m-auto">
           <div className="details flex justify-between items-center py-10 font-bold">
             <h2 className="text-2xl text-(--color-text-black) "> القاعات</h2>
-            <Button text={"عرض الكل"} url={"/halls"} />
+            <Button text={"عرض القاعات"} url={"/halls"} />
           </div>
           <div className="w-full">
             <BackgroundImg img={imgComp} />
@@ -23,7 +23,7 @@ export default function ContentHome() {
             <h2 className="text-2xl text-(--color-text-black)">
               لوكيشن تصوير
             </h2>
-            <Button text={"عرض الكل"} url={"/photography"} />
+            <Button text={"عرض المصورين"} url={"/photography"} />
           </div>
           <div className="w-full">
             <BackgroundImg img={loc} />

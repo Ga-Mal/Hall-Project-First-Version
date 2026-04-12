@@ -18,7 +18,7 @@ export default function Locations() {
         <div className="md:w-[90%] sm:w-[98%] mx-auto flex flex-wrap gap-10 justify-center items-center">
           {locations.map((loc) => (
             <div key={loc.id} className="sm:w-full md:w-[40%] lg:w-[25%]">
-              <CardStandard btnMassege="عرض اللوكيشن" details={loc} />
+              <CardStandard btnMassege="عرض المصور" details={loc} />
             </div>
           ))}
         </div>

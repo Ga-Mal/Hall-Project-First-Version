@@ -53,7 +53,7 @@ export default function HallPageDetails() {
             <p className="text-3xl my-10 font-bold text-(--color-text-black)">السعر {hall.price} جنية مصري</p>
             <p className="text-3xl mb-10 font-semibold text-(--color-text-black)"> معلومات التواصل</p>
             <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">العنوان</span> {hall.address}</p>
-            <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الموقع</span> {hall.hall_location}</p>
+            <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الموقع</span> <a href={hall.hall_location} target="_blank" rel="noopener noreferrer" className="text-[#641888] font-bold hover:underline">انقر هنا</a> </p>
             <p className="pb-5 text-(--color-text-black) text-[20px]">
               <span className="font-semibold ml-8">الهاتف</span>
               <span dir="ltr">{hall.phone}</span>

@@ -71,7 +71,7 @@ export default function CardStandard({ btnMassege, details }) {
           <div className="text-center text-2xl pt-4">
             <Link
               to={`${details.id}`}
-              className="bg-(--color-text-gold)  px-3 py-1.5 rounded-2xl hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 ">
+              className="bg-(--color-text-gold) font-semibold  px-3 py-1.5 rounded-2xl hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 ">
               {btnMassege}
             </Link>
             {user?.role === "admin" && (

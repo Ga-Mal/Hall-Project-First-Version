@@ -109,7 +109,7 @@ export default function UpdateHall() {
         <input value={form.title} name="title" placeholder="اسم القاعة" className="input" onChange={handleChange} required />
         <input value={form.price} name="price" placeholder="السعر" className="input" onChange={handleChange} required />
         <input value={form.address} name="address" placeholder="العنوان" className="input" onChange={handleChange} required />
-        <input value={form.hall_location} name="hall_location" placeholder="Location" className="input" onChange={handleChange} required />
+        <input value={form.hall_location} name="hall_location" placeholder="لينك القاعة" className="input" onChange={handleChange} required />
         <input value={form.phone} name="phone" placeholder="رقم الهاتف" className="input" onChange={handleChange} required />
         <input value={form.whatsapp} name="whatsapp" placeholder="WhatsApp" className="input" onChange={handleChange} required />
         <textarea value={form.description} name="description" placeholder="الوصف" className="input" onChange={handleChange} required />
