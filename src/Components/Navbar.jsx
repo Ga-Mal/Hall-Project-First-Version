@@ -20,7 +20,7 @@ export default function Nav() {
   const clearSession = () => {
     Swal.fire({
       title: "تسجيل الخروج",
-      text: `أهلا يا ${firstName}, هل تريج الخروج بالفعل ؟😢`,
+      text: `أهلا يا ${firstName}, هل تريد الخروج بالفعل ؟😢`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "نعم",
@@ -30,7 +30,7 @@ export default function Nav() {
         localStorage.removeItem("session_token");
         Swal.fire({
           title: "تم تسجيل الخروج ✅",
-          text: "لقد تم تسجيل خروجك بنجاح. نأمل أن نراك مرة أخرى قريبًا!",
+          text: "لقد تم تسجيل خروجك بنجاح. نأمل أن نراك مرة أخرى !",
           icon: "success",
           timer: 1500,
           showConfirmButton: false

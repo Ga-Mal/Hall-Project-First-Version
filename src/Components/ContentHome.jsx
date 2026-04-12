@@ -21,7 +21,7 @@ export default function ContentHome() {
         <div className="halls w-full m-auto">
           <div className="details flex justify-between items-center py-10 font-bold">
             <h2 className="text-2xl text-(--color-text-black)">
-              لوكيشن تصوير
+              المصورين 
             </h2>
             <Button text={"عرض المصورين"} url={"/photography"} />
           </div>
