@@ -54,7 +54,7 @@ function MainLayout() {
       <Toaster position="top-center" />
 
       <Navbar />
-      <div className="">
+      <div>
         <ScrollToTop />
         <div className="flex-1 flex flex-col">
           <div className="mb-10 flex-1 overflow-hidden">

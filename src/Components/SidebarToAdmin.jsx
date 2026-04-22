@@ -21,7 +21,7 @@ export default function SidebarToAdmin() {
           )}`}>
           إضافة قاعة
         </Link>
-
+ 
         <Link
           to="/management/addLocation"
           className={`block px-4 py-2 rounded-lg font-medium transition ${isActive(

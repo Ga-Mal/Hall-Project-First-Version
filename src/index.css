@@ -24,29 +24,27 @@ body {
   background-color: #72727231;
 }
 
-/* للمتصفحات المبنية على WebKit */
 body::-webkit-scrollbar {
-  width: 15px; /* عرض الـ scrollbar */
+  width: 15px; 
 }
 
 body::-webkit-scrollbar-track {
-  background: var(--color-text-gold); /* لون خلفية الـ track */
+  background: var(--color-text-gold);
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: var(--color-hover); /* لون المؤشر */
-  border-radius: 6px; /* انحناء المؤشر */
+  background-color: var(--color-hover); 
+  border-radius: 6px; 
   border: 0.5px solid #000000;
 }
 
 body::-webkit-scrollbar-thumb:hover {
-  background-color: #44105c; /* لون عند hover */
+  background-color: #44105c; 
 }
 
 
-/* لون مؤشر الكتابة */
 input, textarea, body {
-  caret-color: var(--color-text-black); /* أو أي لون تحبه */
+  caret-color: var(--color-text-black);
 }
 
 ::selection {

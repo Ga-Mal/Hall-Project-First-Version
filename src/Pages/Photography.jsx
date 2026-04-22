@@ -12,7 +12,7 @@ export default function Locations() {
 
       <div className="w-full">
         <p className="text-2xl font-bold text-center py-5 text-(--color-text-black)">
-          لوكيشن تصوير
+         المصورين المتاحين في المنصة
         </p>
 
         <div className="md:w-[90%] sm:w-[98%] mx-auto flex flex-wrap gap-10 justify-center items-center">
