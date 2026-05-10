@@ -1,6 +1,6 @@
 import BackgroundImg from "../Components/BackgroundImg";
 import ContentHome from "../Components/ContentHome";
-import imgComp from "../assets/imgs/bg.png";
+import imgComp from "../assets/imgs/bg.jpg";
 
 export default function Home() {
   

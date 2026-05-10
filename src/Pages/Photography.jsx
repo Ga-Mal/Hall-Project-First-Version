@@ -6,10 +6,8 @@ import { useLocatoinsStore } from "../zustand/locationsStore";
 
 export default function Locations() {
   const { locations } = useLocatoinsStore();
-
-  // 1. State للفلترة
   const [selectedZone, setSelectedZone] = useState("الكل");
-  const [maxPrice, setMaxPrice] = useState(100000);
+  const [maxPrice, setMaxPrice] = useState(50000);
 
   // 2. استخراج المحافظات المتاحة للمصورين بدون تكرار
   const zones = useMemo(() => {
@@ -17,7 +15,6 @@ export default function Locations() {
     return ["الكل", ...new Set(allZones)];
   }, [locations]);
 
-  // 3. منطق الفلترة (المحافظة + السعر)
   const filteredLocations = locations.filter((loc) => {
     const matchZone = selectedZone === "الكل" || loc.zone === selectedZone;
     const matchPrice = loc.price <= maxPrice;
@@ -65,7 +62,7 @@ export default function Locations() {
               <input 
                 type="range" 
                 min="0" 
-                max="20000" // عادة أسعار المصورين أقل من القاعات، ممكن تعدل الماكس حسب الداتا عندك
+                max="50000" // عادة أسعار المصورين أقل من القاعات، ممكن تعدل الماكس حسب الداتا عندك
                 step="500"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
@@ -81,7 +78,7 @@ export default function Locations() {
 
             {/* Reset Button */}
             <button 
-              onClick={() => { setSelectedZone("الكل"); setMaxPrice(100000); }}
+              onClick={() => { setSelectedZone("الكل"); setMaxPrice(10000); }}
               className="w-full py-4 text-sm font-bold text-white bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-lg shadow-purple-200 hover:shadow-purple-300 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
             >
               إعادة تعيين الفلاتر
@@ -111,7 +108,7 @@ export default function Locations() {
             <div className="text-center py-32  rounded-[2.5rem] border-2 border-dashed border-gray-100">
               <p className="text-gray-400 font-bold text-xl">مفيش مصورين بالمواصفات دي حالياً</p>
               <button 
-                onClick={() => { setSelectedZone("الكل"); setMaxPrice(100000); }}
+                onClick={() => { setSelectedZone("الكل"); setMaxPrice(50000); }}
                 className="mt-4 text-purple-600 underline font-bold cursor-pointer"
               >
                 إظهار الكل
