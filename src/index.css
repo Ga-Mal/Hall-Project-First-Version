@@ -4,7 +4,6 @@
 }
 
 :root {
-
   /*  ====== Colors System  ========= */
   --color-text-light: #ffffff;
   --color-text-black: #000000;
@@ -17,15 +16,17 @@
 
 body {
   direction: rtl;
-  background-color: #e0e0e0;
+  background-color: #cacaca;
+  font-family: "IBM Plex Sans Arabic", sans-serif;
   cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23593C7C" d="M4.5.79v22.42l6.56-6.57h9.29L4.5.79z"></path></svg>'), auto !important;
 }
+
 .nav {
-  background-color: #72727231;
+  background-color: #0000007b;
 }
 
 body::-webkit-scrollbar {
-  width: 15px; 
+  width: 7px; 
 }
 
 body::-webkit-scrollbar-track {
@@ -34,17 +35,12 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   background-color: var(--color-hover); 
-  border-radius: 6px; 
+  /* border-radius: 6px;  */
   border: 0.5px solid #000000;
 }
 
 body::-webkit-scrollbar-thumb:hover {
   background-color: #44105c; 
-}
-
-
-input, textarea, body {
-  caret-color: var(--color-text-black);
 }
 
 ::selection {

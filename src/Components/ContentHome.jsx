@@ -1,6 +1,6 @@
 import BackgroundImg from "./BackgroundImg";
-import imgComp from "../assets/imgs/halls.png";
-import loc from "../assets/imgs/loaction.png";
+import imgComp from "../assets/imgs/halls.jpg";
+import loc from "../assets/imgs/locations.jpg";
 import Button from "./Button";
 import ContactForm from "./ContactForm";
 
@@ -45,7 +45,7 @@ export default function ContentHome() {
 
         {/* Contact */}
         <p className="text-3xl font-bold my-5 md:my-15 text-center">تواصل معنا</p>
-        <div className="">
+        <div>
           <ContactForm />
         </div>
       </div>

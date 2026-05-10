@@ -113,7 +113,7 @@ export default function AddHall() {
 
   // --------------------
   return (
-    <form onSubmit={submitHall} className="nav p-6 mt-2 w-[80%] mx-auto bg-(--color-hover) backdrop-blur-xl shadow-lg rounded-xl">
+    <form onSubmit={submitHall} className="bg-[#0000007b]/30 p-6 mt-2 w-[80%] mx-auto backdrop-blur-xl shadow-lg rounded-xl">
   
       <h1 className="text-xl font-bold mb-4">إضافة قاعة جديدة</h1>{" "}
       <div className="grid grid-cols-1 gap-4">

@@ -2,6 +2,7 @@ import { useLocation, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "../utils/supabaseClient";
 import Swal from "sweetalert2";
+import { styleInput } from "./ContactForm";
 
 export default function ReservationForm() {
   const { hallID, photographyID } = useParams();
@@ -10,6 +11,10 @@ export default function ReservationForm() {
   const isPhotography = location.pathname.includes("photography");
   const serviceID = hallID || photographyID;
   const currentService = isHall ? "halls" : isPhotography ? "locations" : null;
+
+  // حالة التحميل
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     subject: " طلب خدمة من PartyVenue",
     clientName: "",
@@ -21,11 +26,8 @@ export default function ReservationForm() {
   });
 
   const fetchServiceDetails = async () => {
-    const { data, error } = await supabase
-      .from(currentService)
-      .select("title")
-      .eq("id", serviceID)
-      .single();
+    const { data, error } = await supabase.from(currentService).select("title").eq("id", serviceID).single();
+
     if (error) {
       console.error("Error fetching service details:", error);
       return;
@@ -35,7 +37,7 @@ export default function ReservationForm() {
 
   useEffect(() => {
     fetchServiceDetails();
-  }, []);
+  }, [serviceID]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,107 +46,91 @@ export default function ReservationForm() {
 
   const submitHall = async (e) => {
     e.preventDefault();
+    
+    // تفعيل حالة التحميل
+    setLoading(true);
+
     const form = new FormData();
-    form.append("access_key", "f3993f35-5c98-497d-930c-11acae64271b"); // Web3Forms Key
-    form.append("subject", formData.subject);
-    form.append("client name", formData.clientName);
-    form.append("service name", formData.serviceName);
-    form.append("service ID", formData.serviceID);
-    form.append("phone", formData.phone);
-    form.append("whatsapp", formData.whatsapp);
+    form.append("access_key", "f3993f35-5c98-497d-930c-11acae64271b");
     form.append("to_email", "gamalabdelfattah098@gmail.com");
+    form.append("service name", formData.serviceName);
+    form.append("client name", formData.clientName);
+    form.append("service ID", formData.serviceID);
+    form.append("whatsapp", formData.whatsapp);
     form.append("message", formData.details);
+    form.append("subject", formData.subject);
+    form.append("phone", formData.phone);
 
     try {
-      // Send data to Web3Forms
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: form,
-      });
-      // Save order to Supabase
-      const {error} = await supabase.from("orders").insert([
+      // 1. إرسال البيانات لـ Web3Forms
+      const response = await fetch("https://api.web3forms.com/submit", { method: "POST", body: form });
+      
+      // 2. حفظ الطلب في Supabase
+      const { error: supabaseError } = await supabase.from("orders").insert([
         {
-          hall_id: isHall ? formData.serviceID : null,
           location_id: isPhotography ? formData.serviceID : null,
-          client_name: formData.clientName,
+          hall_id: isHall ? formData.serviceID : null,
           service_name: formData.serviceName,
-          client_phone: formData.phone,
           client_whatsapp: formData.whatsapp,
-          details: formData.details,
+          client_name: formData.clientName,
           service_id: formData.serviceID,
-        },
+          client_phone: formData.phone,
+          details: formData.details,
+        }
       ]);
 
-      if (response.ok && !error) {
+      if (response.ok && !supabaseError) {
         setFormData({
-          clientName: "",
-          phone: "",
-          whatsapp: "",
-          details: "",
-          serviceID: null,
-          serviceName: "",
+          subject: " طلب خدمة من PartyVenue",
+          clientName: "", 
+          phone: "", 
+          whatsapp: "", 
+          details: "", 
+          serviceID: serviceID, 
+          serviceName: formData.serviceName 
         });
+
         Swal.fire({
           title: "طلبك وصلنا 😃",
           text: `أهلا ${formData.clientName}، شكراً لتواصلك معنا! سنقوم بالرد عليك في أقرب وقت ممكن.`,
           icon: "success",
           confirmButtonText: "تمام",
         });
+      } else {
+        throw new Error("حدث خطأ أثناء المعالجة");
       }
     } catch (error) {
       console.error("Error:", error);
+      Swal.fire({
+        title: "عذراً ❌",
+        text: "حدث خطأ أثناء إرسال طلبك، يرجى المحاولة مرة أخرى.",
+        icon: "error",
+      });
+    } finally {
+      // إيقاف حالة التحميل وتفعيل الزر
+      setLoading(false);
     }
-    console.log("Form Data:", formData);
   };
 
   return (
-    <div className="mt-20">
-      <form
-        onSubmit={submitHall}
-        className="nav p-6 mt-2 w-[80%] mx-auto bg-(--color-hover) backdrop-blur-xl shadow-lg rounded-xl">
+    <section className="mt-20">
+      <form className="p-6 mt-2 w-[80%] mx-auto bg-[#0000007b]/30 backdrop-blur-xl shadow-lg rounded-xl" onSubmit={submitHall}>
         <h1 className="text-xl text-center font-bold mb-4">طلب الخدمة</h1>
-
-        <div className="grid grid-cols-1 gap-4">
-          <input
-            value={formData.clientName}
-            name="clientName"
-            placeholder="اسم العميل"
-            className="input"
-            onChange={handleChange}
-            required
-          />
-          <input
-            value={formData.phone}
-            name="phone"
-            placeholder="رقم الهاتف"
-            className="input"
-            onChange={handleChange}
-            required
-          />
-          <input
-            value={formData.whatsapp}
-            name="whatsapp"
-            placeholder="رقم واتساب"
-            className="input"
-            onChange={handleChange}
-            required
-          />
-
-          <textarea
-            value={formData.details}
-            name="details"
-            placeholder="تفاصيل اضافية , يرجي كتابة اسم الخدمة المطلوبة مع اضافة ملاحظاتك"
-            className="input"
-            onChange={handleChange}
-            required></textarea>
-
-          <button
-            type="submit"
-            className="w-[50%] mx-auto bg-(--color-hover) px-3 py-1.5 rounded-2xl cursor-pointer hover:bg-[#38084e] text-(--color-text-light) duration-500">
-            إرسال البيانات
+        <section className="grid grid-cols-1 gap-4">
+          <input value={formData.clientName} name="clientName" placeholder="اسم العميل" className={styleInput} onChange={handleChange} required />  
+          <input value={formData.phone} name="phone" type="tel" inputMode="numeric" placeholder="رقم الهاتف" className={styleInput} onChange={handleChange} required />
+          <input value={formData.whatsapp} name="whatsapp" type="tel" inputMode="numeric" placeholder="رقم واتساب" className={styleInput} onChange={handleChange} required />
+          <textarea value={formData.details} name="details" placeholder="تفاصيل اضافية , يرجي كتابة ملاحظاتك" className={styleInput} onChange={handleChange} required></textarea>
+          
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={`w-[50%] mx-auto px-3 py-1.5 rounded-2xl cursor-pointer duration-500 text-(--color-text-light)
+            ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-(--color-hover) hover:bg-[#38084e]"}`}>
+            {loading ? "جاري الإرسال..." : "إرسال البيانات"}
           </button>
-        </div>
+        </section>
       </form>
-    </div>
+    </section>
   );
 }

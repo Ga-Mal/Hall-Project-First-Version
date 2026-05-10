@@ -7,6 +7,7 @@ import UpdateHall from "./Components/UpdateHall";
 import { useHallsStore } from "./zustand/hallsStore";
 import { useLocatoinsStore } from "./zustand/locationsStore";
 import UpdateLocation from "./Components/UpdateLocation";
+import AllOrders from "./Components/AllOrders";
 
 const AddHall = lazy(() => import("./Components/addHall"));
 const AdminManagement = lazy(() => import("./Components/AdminManagement"));
@@ -136,11 +137,9 @@ const router = createBrowserRouter([
         children: [
           { path: "addHall", element: <AddHall /> },
           { path: "addLocation", element: <AddLocation /> },
+          { path: "allorders", element: <AllOrders /> },
           { path: "updateHall/:updateHallID", element: <UpdateHall /> },
-          {
-            path: "updatePhotography/:updatePhotographyID",
-            element: <UpdateLocation />,
-          },
+          { path: "updatePhotography/:updatePhotographyID", element: <UpdateLocation /> },
         ],
       },
 

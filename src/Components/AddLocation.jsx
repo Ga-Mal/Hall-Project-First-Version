@@ -182,10 +182,7 @@ export default function AddLocation() {
 
   // ================= UI =================
   return (
-    <form
-      onSubmit={submitLocation}
-      className="nav p-6 mt-2 w-[80%] mx-auto backdrop-blur-xl shadow-lg rounded-xl"
-    >
+    <form className="bg-[#0000007b]/30 p-6 mt-2 w-[80%] mx-auto backdrop-blur-xl shadow-lg rounded-xl" onSubmit={submitLocation}>
       <h1 className="text-xl font-bold mb-4">إضافة مصور</h1>
 
       <div className="grid grid-cols-1 gap-4">

@@ -52,32 +52,33 @@ export default function CardStandard({ btnMassege, details }) {
   
   return (
     <div className="w-full my-5">
-      <Card className="max-w-sm  text-(--color-text-black) bg-transparent! hover:shadow-[#641888e3] shadow-lg duration-200">
-        <div className=" h-full">
+      <Card className="max-w-sm border-purple-700! border-2 text-(--color-text-black) bg-gray-200! hover:shadow-[#641888e3] shadow-lg duration-200">
+        <div className="h-full">
           <img
             loading="lazy"
             src={details.header_img || null}
             alt="img"
-            className="rounded-2xl h-full"
+            className="rounded-[10px] h-full"
           />
         </div>
         <h5 className="text-xl text-center font-semibold">{details.title}</h5>
 
         <p className="text-center"> {descriptionLength} </p>
         <div className="">
-          <p className="text-3xl text-center pb-5 font-bold">
+          <p className="text-3xl text-center pb-3 font-bold">
             {details.price} ج.م
           </p>
-          <div className="text-center text-2xl pt-4">
+          <div className="text-center text-[20px]">
             <Link
               to={`${details.id}`}
-              className="bg-(--color-text-gold) font-semibold  px-3 py-1.5 rounded-2xl hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 ">
+              className={`bg-yellow-600/60 border ${user?.role !== "admin" ? "block" : "" } border-yellow-600 font-semibold text-gray-50 px-2 py-1 rounded-[10px] hover:bg-yellow-300/60 duration-300`}
+            >
               {btnMassege}
             </Link>
             {user?.role === "admin" && (
               <button
                 onClick={() => deleteitem()}
-                className="bg-red-700 m-3 px-2 py-1.5 hover:cursor-pointer rounded-2xl hover:bg-[#790000] text-amber-50 duration-500 ">
+                className="bg-red-700/60 border border-red-600 hover:bg-red-500 text-gray-50 m-3 px-2 py-1 hover:cursor-pointer rounded-[10px] duration-300 ">
                 حذف
               </button>
             )}
@@ -85,13 +86,13 @@ export default function CardStandard({ btnMassege, details }) {
               (currentPath === "photography" ? (
                 <Link
                   to={`/management/updatePhotography/${details.id}`}
-                  className="bg-indigo-700 m-3 px-2 py-1.5 hover:cursor-pointer rounded-2xl hover:bg-indigo-950 text-amber-50 duration-500">
+                  className="bg-indigo-700/60 border border-indigo-800 px-2 py-1 hover:cursor-pointer rounded-[10px] hover:bg-indigo-500 text-amber-50 duration-300">
                   تعديل
                 </Link>
               ) : currentPath === "halls" ? (
                 <Link
                   to={`/management/updateHall/${details.id}`}
-                  className="bg-indigo-700 m-3 px-2 py-1.5 hover:cursor-pointer rounded-2xl hover:bg-indigo-950 text-amber-50 duration-500">
+                  className="bg-indigo-700/80 border border-indigo-800 px-2 py-1 hover:cursor-pointer rounded-[10px] hover:bg-indigo-500 text-amber-50 duration-300">
                   تعديل
                 </Link>
               ) : null)}

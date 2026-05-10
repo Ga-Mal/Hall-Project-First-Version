@@ -7,10 +7,6 @@ export default function HallPageDetails() {
 
   const {getHallById , loading} = useHallsStore();
   const hall = getHallById(parseInt(hallID));
-
-  // if (!hall) {
-  //   return <p className="text-center my-20 py-10">جاري التحميل...</p>;
-  // }
   
     if (!hall) {
       return (
@@ -18,7 +14,7 @@ export default function HallPageDetails() {
           {loading ? (
             <div className="flex items-center justify-center gap-2">
               <span className="loader w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                جاري جلب اللوكيشن...
+                جاري جلب القاعات...
               </div>
             ) : (
               "الدخول"
@@ -47,13 +43,13 @@ export default function HallPageDetails() {
               <img loading="lazy" src={image} key={i} alt="img" className="md:w-[48%] w-full mb-5" />
             ))}
         </div>
-
+            {/* <iframe src="" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
         <div>
           <div>
             <p className="text-3xl my-10 font-bold text-(--color-text-black)">السعر {hall.price} جنية مصري</p>
             <p className="text-3xl mb-10 font-semibold text-(--color-text-black)"> معلومات التواصل</p>
             <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">العنوان</span> {hall.address}</p>
-            <p className="pb-5 text-(--color-text-black) text-[20px]"><span className="font-semibold ml-7">الموقع</span> <a href={hall.hall_location} target="_blank" rel="noopener noreferrer" className="text-[#641888] font-bold hover:underline">انقر هنا</a> </p>
+            <iframe src={hall.hall_location} className="rounded-lg my-2"  width="100%" height="300" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>            
             <p className="pb-5 text-(--color-text-black) text-[20px]">
               <span className="font-semibold ml-8">الهاتف</span>
               <span dir="ltr">{hall.phone}</span>
