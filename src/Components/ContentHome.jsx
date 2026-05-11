@@ -7,9 +7,9 @@ import ContactForm from "./ContactForm";
 export default function ContentHome() {
   return (
     <div className="w-[90%] m-auto">
-      <div className="">
+      <div>
         <div className="halls w-full m-auto">
-          <div className="details flex justify-between items-center py-10 font-bold">
+          <div className="details flex justify-between items-center py-7 font-bold">
             <h2 className="text-2xl text-(--color-text-black) "> القاعات</h2>
             <Button text={"عرض القاعات"} url={"/halls"} />
           </div>
@@ -19,7 +19,7 @@ export default function ContentHome() {
         </div>
 
         <div className="halls w-full m-auto">
-          <div className="details flex justify-between items-center py-10 font-bold">
+          <div className="details flex justify-between items-center py-7 font-bold">
             <h2 className="text-2xl text-(--color-text-black)">المصورين</h2>
             <Button text={"عرض المصورين"} url={"/photography"} />
           </div>

@@ -109,7 +109,7 @@ export default function AddHall() {
       <h1 className="text-xl font-bold mb-4">إضافة قاعة جديدة</h1>
       <div className="grid grid-cols-1 gap-4 text-start">
         <input value={form.title} name="title" placeholder="اسم القاعة" className="input" onChange={handleChange} required />
-        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  300000 الف جنية" className="input" onChange={handleChange} required />
+        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  700000 الف جنية" className="input" onChange={handleChange} required />
         
         <div className="flex flex-col gap-1">
           <label className="text-sm font-semibold mr-1">المحافظة (نطاق العمل)</label>
@@ -144,17 +144,17 @@ export default function AddHall() {
               <button onClick={() => deleteExtension(i)} type="button" className="bg-red-600 h-8 w-[100px] rounded-full font-bold cursor-pointer hover:text-(--color-text-light) duration-300">X</button>
             </div>
           ))}
-          <button onClick={addExtension} type="button" className="px-3 py-1 my-5 bg-(--color-text-gold) hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 rounded-2xl cursor-pointer">
+          <button onClick={addExtension} type="button" className="custom-button">
             إضافة جديدة
           </button>
         </div>
 
-        <button type="submit" className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 flex items-center justify-center gap-2 rounded-2xl">
+        <button type="submit" className="w-[50%] mx-auto! custom-button">
           {loading ? (
             <>
               <span>جاري الإرسال...</span>
               <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-            </>
+            </> 
           ) : (
             "إرسال البيانات"
           )}

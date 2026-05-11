@@ -8,11 +8,10 @@ const EGYPT_ZONES = [
 ];
 
 export default function UpdateHall() {
+  const navigate = useNavigate();
   const { updateHallID } = useParams();
   const { getHallById, updateHall, loading } = useHallsStore();
-  const navigate = useNavigate();
   const hall = getHallById(Number(updateHallID));
-  
   const [headerFile, setHeaderFile] = useState(null);
   const [galleryFiles, setGalleryFiles] = useState([]);
   const [form, setForm] = useState({
@@ -35,7 +34,7 @@ export default function UpdateHall() {
       title: hall.title || "",
       price: hall.price || "",
       category: hall.category || "halls",
-      zone: hall.zone || "القاهرة", // تحميل المحافظة المسجلة مسبقاً
+      zone: hall.zone || "القاهرة",
       address: hall.address || "",
       hall_location: hall.hall_location || "",
       phone: hall.phone || "",
@@ -90,7 +89,7 @@ export default function UpdateHall() {
         title: form.title.trim(),
         price: Number(form.price),
         category: "halls",
-        zone: form.zone, // إرسال المحافظة المختارة
+        zone: form.zone, 
         address: form.address.trim(),
         hall_location: form.hall_location.trim(),
         phone: form.phone.trim(),
@@ -112,12 +111,12 @@ export default function UpdateHall() {
   };
 
   return (
-    <form onSubmit={submitHall} className="nav p-6 mt-2 w-[80%] mx-auto bg-(--color-hover) rounded-xl">
+    <form onSubmit={submitHall} className="p-6 mt-2 w-[80%] mx-auto bg-[#0000007b]/30 rounded-xl">
       <h1 className="text-xl font-bold mb-4">تعديل القاعة</h1>
 
       <div className="grid gap-4 text-start">
         <input value={form.title} name="title" placeholder="اسم القاعة" className="input" onChange={handleChange} required />
-        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  300000 الف جنية" className="input" onChange={handleChange} required />
+        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  700000 الف جنية" className="input" onChange={handleChange} required />
         
         <div className="flex flex-col gap-1">
           <label className="text-sm font-semibold mr-1">المحافظة:</label>

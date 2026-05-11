@@ -10,7 +10,6 @@ function OrderStandard({ orderData, onRefresh }) {
   const getServiceName = orderData.hall_id !== null ? "قاعة" : "مصور";
   const orderDetails = orderData.hall_id !== null ? orderData.halls : orderData.locations;
 
-  // وظيفة القبول
   const handleAccept = async () => {
     const { error } = await supabase.from("orders").update({ status: "accepted" }).eq("id", orderData.id);
 
@@ -20,7 +19,6 @@ function OrderStandard({ orderData, onRefresh }) {
     }
   };
 
-  // وظيفة الحذف (الرفض)
   const handleDelete = async () => {
     Swal.fire({
       title: "هل أنت متأكد؟",
@@ -45,7 +43,6 @@ function OrderStandard({ orderData, onRefresh }) {
   return (
     <section className="relative flex flex-col h-full p-4 text-lg text-start hover:shadow-lg duration-200 shadow-purple-500 bg-[#0000007b]/30 rounded-2xl text-gray-700 font-semibold border border-white/10">
       
-      {/* علامة الصح الخضراء في حال القبول */}
       {orderData.status === "accepted" && (
         <div className="absolute top-2 left-2 text-green-500 ">
           <IoCheckmarkCircle size={35} />
@@ -60,7 +57,7 @@ function OrderStandard({ orderData, onRefresh }) {
         <p className="flex items-center gap-2"> <CgProfile size={23} className="shrink-0" /> <span>{orderData.client_name}</span></p>
         <p className="flex items-center gap-2"> <PiPhone size={23} className="shrink-0" /> <span>{orderData.client_phone}</span></p>
         <p className="flex items-center gap-2"> <PiWhatsappLogo size={23} className="shrink-0" /> <span>{orderData.client_whatsapp}</span></p>
-        <p className="flex items-start gap-2"> <BiNotepad size={23} className="shrink-0" /> <span>{orderData.details}</span></p>
+        <p className="flex items-start  gap-2"> <BiNotepad size={23} className="shrink-0" /> <span>{orderData.details}</span></p>
       </section>
 
       <section className="mt-4 text-sm">
@@ -68,7 +65,7 @@ function OrderStandard({ orderData, onRefresh }) {
         <p>اسم الخدمة: {orderData.service_name}</p>
         <p>السعر: {orderDetails?.price} ج.م</p>
         <p>العنوان: {orderDetails?.address}</p>
-        <p>الهاتف: {orderDetails?.phone}</p>
+        <p>الهاتف:  {orderDetails?.phone}</p>
         <p>الواتساب: {orderDetails?.whatsapp}</p>
         <p>المحافظة: {orderDetails?.zone}</p>
       </section>

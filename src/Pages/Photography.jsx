@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
 import BackgroundImg from "../Components/BackgroundImg";
 import CardStandard from "../Components/CardStandard";
-import imgHeader from "../assets/imgs/location.png"; // تأكد من تغيير الصورة لصورة مناسبة للمصورين إذا توفرت
+import imgHeader from "../assets/imgs/location.png";
 import { useLocatoinsStore } from "../zustand/locationsStore";
 
 export default function Locations() {
   const { locations } = useLocatoinsStore();
   const [selectedZone, setSelectedZone] = useState("الكل");
-  const [maxPrice, setMaxPrice] = useState(50000);
+  const [maxPrice, setMaxPrice] = useState(100000);
 
-  // 2. استخراج المحافظات المتاحة للمصورين بدون تكرار
+  // 2. Extract unique zones for the dropdown filter
   const zones = useMemo(() => {
     const allZones = locations.map((loc) => loc.zone).filter(Boolean);
     return ["الكل", ...new Set(allZones)];
@@ -21,6 +21,7 @@ export default function Locations() {
     return matchZone && matchPrice;
   });
 
+  console.log(locations);
   return (
     <div className="min-h-screen ">
       <BackgroundImg img={imgHeader} details="" />
@@ -35,12 +36,10 @@ export default function Locations() {
               <span className="w-2 h-2 bg-purple-600 rounded-full animate-pulse"></span>
             </h2>
 
-            {/* الفلترة بالمحافظة */}
+            {/* Filter by Zone */}
             <div className="mb-10">
               <label className="block text-sm font-semibold mb-3 text-gray-600 mr-1">المحافظة</label>
-              <select 
-                value={selectedZone} 
-                onChange={(e) => setSelectedZone(e.target.value)} 
+              <select value={selectedZone} onChange={(e) => setSelectedZone(e.target.value)} 
                 className="w-full p-3.5 bg-gray-100 border-none rounded-2xl focus:ring-2 focus:ring-purple-700 outline-none transition-all cursor-pointer text-gray-700"
               >
                 {zones.map((zone) => (
@@ -49,7 +48,7 @@ export default function Locations() {
               </select>
             </div>
 
-            {/* الفلترة بالسعر */}
+            {/* Filter by Price */}
             <div className="mb-10">
               <div className="flex justify-between items-end mb-4">
                 <label className="text-sm font-semibold text-gray-600 mr-1">أقصى سعر للجلسة</label>
@@ -62,23 +61,22 @@ export default function Locations() {
               <input 
                 type="range" 
                 min="0" 
-                max="50000" // عادة أسعار المصورين أقل من القاعات، ممكن تعدل الماكس حسب الداتا عندك
+                max="100000"
                 step="500"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="w-full h-1.5 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-purple-600 transition-all hover:accent-purple-700"
               />
               
-              <div className="flex justify-between text-[10px] font-bold text-gray-400 mt-3 px-1 uppercase tracking-wider">
+              <div className="flex justify-between text-[10px] font-bold text-gray-400 mt-3 uppercase tracking-wider">
                 <span>0</span>
-                <span>10k</span>
-                <span>20k+</span>
+                <span>50k</span>
+                <span>100k+</span>
               </div>
             </div>
 
             {/* Reset Button */}
-            <button 
-              onClick={() => { setSelectedZone("الكل"); setMaxPrice(10000); }}
+            <button onClick={() => { setSelectedZone("الكل"); setMaxPrice(100000); }}
               className="w-full py-4 text-sm font-bold text-white bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-lg shadow-purple-200 hover:shadow-purple-300 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
             >
               إعادة تعيين الفلاتر
@@ -94,7 +92,7 @@ export default function Locations() {
               <span className="text-purple-600 mr-2 bg-purple-50 px-3 py-1 rounded-full text-lg">{filteredLocations.length}</span>
             </h1>
             
-            <div className="hidden sm:flex gap-2 text-xs font-bold text-gray-400">
+            <div className="hidden sm:flex gap-2 text-lg font-bold text-gray-400">
               <span>فوتوجرافر</span> / <span>{selectedZone}</span>
             </div>
           </div>
@@ -107,8 +105,7 @@ export default function Locations() {
           ) : filteredLocations.length === 0 ? (
             <div className="text-center py-32  rounded-[2.5rem] border-2 border-dashed border-gray-100">
               <p className="text-gray-400 font-bold text-xl">مفيش مصورين بالمواصفات دي حالياً</p>
-              <button 
-                onClick={() => { setSelectedZone("الكل"); setMaxPrice(50000); }}
+              <button onClick={() => { setSelectedZone("الكل"); setMaxPrice(100000); }}
                 className="mt-4 text-purple-600 underline font-bold cursor-pointer"
               >
                 إظهار الكل

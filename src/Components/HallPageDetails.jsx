@@ -72,7 +72,7 @@ export default function HallPageDetails() {
             ))}
 
           <div className="w-full text-center">
-            <Link to={"reservation"} className="bg-(--color-text-gold) my-10 px-3 py-3 font-semibold rounded-2xl hover:bg-[#641888] hover:text-(--color-text) duration-500 inline-block w-[80%] md:w-[40%]">
+            <Link to={"reservation"} className="w-[50%] mx-auto! py-3! block custom-button text-2xl">
               اطلب القاعة
             </Link>
           </div>

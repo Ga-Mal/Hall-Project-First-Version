@@ -78,7 +78,7 @@ export default function Nav() {
             {currentUser ? (
               <span className="text-(--color-text-light)">
                 أهلا , {firstName} 💜
-                <button className=" bg-(--color-hover) cursor-pointer px-5 py-1 rounded-2xl hover:bg-[#38084e] hover:text-(--color-text-light) duration-500 mx-5"
+                <button className="text-white bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-lg shadow-purple-200 hover:shadow-purple-400 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer px-5 py-1 mx-5"
                   onClick={clearSession}>
                   خروج
                 </button>

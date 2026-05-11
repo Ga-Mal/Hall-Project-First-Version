@@ -7,7 +7,7 @@ import { useHallsStore } from "../zustand/hallsStore";
 export default function Halls() {
   const { halls } = useHallsStore();
   const [selectedZone, setSelectedZone] = useState("الكل");
-  const [maxPrice, setMaxPrice] = useState(300000);
+  const [maxPrice, setMaxPrice] = useState(700000);
 
   const zones = useMemo(() => {
     const allZones = halls.map((h) => h.zone).filter(Boolean);
@@ -61,7 +61,7 @@ export default function Halls() {
               <input 
                 type="range" 
                 min="0" 
-                max="300000" 
+                max="700000" 
                 step="1000"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
@@ -77,7 +77,7 @@ export default function Halls() {
 
             {/* Reset Button */}
             <button 
-              onClick={() => { setSelectedZone("الكل"); setMaxPrice(300000); }}
+              onClick={() => { setSelectedZone("الكل"); setMaxPrice(700000); }}
               className="w-full py-4 text-sm font-bold text-white bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl shadow-lg shadow-purple-200 hover:shadow-purple-300 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
             >
               إعادة تعيين الفلاتر
@@ -94,7 +94,7 @@ export default function Halls() {
             </h1>
             
             {/* Breadcrumb أو Indicator بسيط */}
-            <div className="hidden sm:flex gap-2 text-xs font-bold text-gray-400">
+            <div className="hidden sm:flex gap-2 text-lg font-bold text-gray-400">
               <span>قاعات</span> / <span>{selectedZone}</span>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function Halls() {
             <div className="text-center py-32 rounded-[2.5rem] border-2 border-dashed border-gray-100">
               <p className="text-gray-400 font-bold text-xl">للأسف، مفيش قاعات بالمواصفات دي حالياً</p>
               <button 
-                onClick={() => { setSelectedZone("الكل"); setMaxPrice(100000); }}
+                onClick={() => { setSelectedZone("الكل"); setMaxPrice(700000); }}
                 className="mt-4 text-purple-600 underline font-bold"
               >
                 جرب تغير الفلاتر

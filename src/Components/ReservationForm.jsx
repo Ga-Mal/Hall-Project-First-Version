@@ -125,8 +125,7 @@ export default function ReservationForm() {
           <button 
             type="submit" 
             disabled={loading}
-            className={`w-[50%] mx-auto px-3 py-1.5 rounded-2xl cursor-pointer duration-500 text-(--color-text-light)
-            ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-(--color-hover) hover:bg-[#38084e]"}`}>
+            className="w-[50%] mx-auto! custom-button">
             {loading ? "جاري الإرسال..." : "إرسال البيانات"}
           </button>
         </section>

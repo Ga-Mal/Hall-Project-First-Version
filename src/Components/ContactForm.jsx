@@ -51,7 +51,6 @@ export default function ContactForm() {
       return;
     }
 
-    // تفعيل حالة التحميل وتعطيل الزر
     setLoading(true);
 
     const form = new FormData();
@@ -90,7 +89,6 @@ export default function ContactForm() {
         icon: "error",
       });
     } finally {
-      // إيقاف حالة التحميل وتفعيل الزر مرة أخرى في كل الحالات
       setLoading(false);
     }
   };
@@ -114,8 +112,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={loading} // تعطيل الزر هنا
-            className={`w-[50%] mx-auto px-3 py-1.5 rounded-2xl cursor-pointer text-(--color-text-light) duration-500 
-            ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-(--color-hover) hover:bg-[#38084e]"}`}>
+            className="w-[50%] mx-auto! custom-button">
             {loading ? "جاري الإرسال..." : "إرسال البيانات"}
           </button>
         </div>

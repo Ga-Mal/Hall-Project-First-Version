@@ -82,7 +82,7 @@ export default function UpdateLocation() {
   return (
     <form
       onSubmit={submitLocation}
-      className="nav p-6 mt-2 w-[80%] mx-auto bg-(--color-hover) backdrop-blur-xl shadow-lg rounded-xl text-start"
+      className="bg-[#0000007b]/30 p-6 mt-2 w-[80%] mx-auto backdrop-blur-xl shadow-lg rounded-xl"
     >
       <h1 className="text-xl font-bold mb-4">تعديل بيانات المصور</h1>
 
@@ -179,9 +179,7 @@ export default function UpdateLocation() {
         <button
           disabled={loading}
           type="submit"
-          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
-               hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 
-               flex items-center justify-center gap-2 rounded-2xl"
+          className="w-[50%] mx-auto! custom-button"
         >
           {loading ? (
             <>

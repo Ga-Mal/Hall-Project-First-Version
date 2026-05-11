@@ -3,7 +3,6 @@ import Swal from "sweetalert2";
 import imageCompression from "browser-image-compression";
 import { useLocatoinsStore } from "../zustand/locationsStore";
 
-// قائمة محافظات مصر الموحدة
 const EGYPT_ZONES = [
   "القاهرة", "الجيزة", "الإسكندرية", "الدقهلية", "البحر الأحمر", "البحيرة", "الفيوم", "الغربية", "الإسماعيلية", "المنوفية", "المنيا", "القليوبية", "الوادي الجديد", "السويس", "الشرقية", "دمياط", "بورسعيد", "جنوب سيناء", "كفر الشيخ", "مطروح", "الأقصر", "قنا", "شمال سيناء", "سوهاج", "بني سويف", "أسيوط", "أسوان"
 ];
@@ -13,12 +12,11 @@ export default function AddLocation() {
   const [headerImg, setHeaderImg] = useState(null);
   const [galleryImgs, setGalleryImgs] = useState([]);
   const { addLocation } = useLocatoinsStore();
-
   const [form, setForm] = useState({
     title: "",
     price: "",
     category: "locations",
-    zone: "القاهرة", // الحقل المطلوب للمحافظة
+    zone: "القاهرة",
     address: "",
     phone: "",
     whatsapp: "",
@@ -145,7 +143,7 @@ export default function AddLocation() {
 
       <div className="grid grid-cols-1 gap-4 text-start">
         <input value={form.title} name="title" placeholder="اسم المصور" className="input" onChange={handleChange} required />
-        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  50000 الف جنية" className="input" onChange={handleChange} required />
+        <input value={form.price} name="price" placeholder="السعر - بحد اقصي  100000 الف جنية" className="input" onChange={handleChange} required />
         
         {/* اختيار المحافظة */}
         <div className="flex flex-col gap-1">
@@ -173,9 +171,7 @@ export default function AddLocation() {
         <button
           disabled={loading}
           type="submit"
-          className="w-[50%] mx-auto bg-(--color-text-gold) px-3 py-1.5 cursor-pointer 
-          hover:bg-(--color-hover) hover:text-(--color-text-light) duration-500 
-          flex items-center justify-center gap-2 rounded-2xl"
+          className="w-[50%] mx-auto! custom-button"
         >
           {loading ? (
             <>
