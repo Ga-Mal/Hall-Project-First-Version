@@ -97,7 +97,7 @@ export default function Nav() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      <div className={`md:hidden bg-white/40 backdrop-blur-xl shadow-xl transition-all duration-300 overflow-hidden
+      <div className={`nav md:hidden bg-white/40 backdrop-blur-xl shadow-xl transition-all duration-300 overflow-hidden
           ${open ? "max-h-96 py-4" : "max-h-0 py-0"}`}>
         <ul className="flex flex-col items-center gap-6 text-xl font-semibold">
           {[
