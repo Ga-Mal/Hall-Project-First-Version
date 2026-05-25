@@ -91,7 +91,7 @@ export default function Nav() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          {open ? ( <HiX className="text-3xl cursor-pointer" onClick={() => setOpen(false)} /> ) : (
+          {open ? ( <HiX className="text-3xl text-white cursor-pointer" onClick={() => setOpen(false)} /> ) : (
             <HiMenu className="text-3xl text-white cursor-pointer" onClick={() => setOpen(true)} /> )}
         </div>
       </div>
