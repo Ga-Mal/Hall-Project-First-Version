@@ -92,6 +92,7 @@ export default function Locations() {
               <span className="text-purple-600 mr-2 bg-purple-50 px-3 py-1 rounded-full text-lg">{filteredLocations.length}</span>
             </h1>
             
+            {/* Indicator */}
             <div className="hidden sm:flex gap-2 text-lg font-bold text-gray-400">
               <span>فوتوجرافر</span> / <span>{selectedZone}</span>
             </div>
