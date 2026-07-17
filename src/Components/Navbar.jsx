@@ -87,7 +87,7 @@ export default function Nav() {
               <Button text={"تسجيل الدخول"} url={"/login"} />
             )}
           </div>
-        </div>
+        </div>  
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
